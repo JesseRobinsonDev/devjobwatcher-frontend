@@ -11,7 +11,7 @@
 		<span class="job-title">{job.jobTitle}</span>
 		<span class="job-company">{job.jobCompany}</span>
 		<div style="display: flex; flex-direction: row; align-items: center; gap: 0.125rem;">
-			<ul style="display: flex; flex-direction: row; gap: 0.125rem;">
+			<ul style="display: flex; flex-direction: row; gap: 0.125rem; flex-wrap: wrap;">
 				{#each job.jobType as type}
 					<li><Tag type="is-primary">{type}</Tag></li>
 				{/each}
@@ -35,7 +35,7 @@
 					<Tag type="is-success">{job.jobLevel}</Tag>
 				{/if}
 			</span>
-			<ul style="display: flex; flex-direction: row; gap: 0.125rem;">
+			<ul style="display: flex; flex-direction: row; gap: 0.125rem; flex-wrap: wrap;">
 				{#each job.jobIndustry as industry}
 					<li><Tag type="is-info">{industry}</Tag></li>
 				{/each}
