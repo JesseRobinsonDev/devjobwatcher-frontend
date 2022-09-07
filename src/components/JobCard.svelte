@@ -7,7 +7,7 @@
 </script>
 
 <div class="job-card">
-	<div style="width: 50%; display: flex; flex-direction: column;">
+	<div class="job-info">
 		<span class="job-title">{job.jobTitle}</span>
 		<span class="job-company">{job.jobCompany}</span>
 		<div style="display: flex; flex-direction: row; align-items: center; gap: 0.125rem;">
@@ -26,9 +26,7 @@
 			{/if}
 		</div>
 	</div>
-	<div
-		style="width: 50%; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 0.125rem;"
-	>
+	<div class="job-tags">
 		<div style="display: flex; flex-direction: row; gap: 0.125rem;">
 			<span>
 				{#if job.jobLevel}
@@ -66,6 +64,12 @@ jobSiteID
 		background-color: rgb(30, 30, 30);
 	}
 
+	.job-info {
+		width: 50%;
+		display: flex;
+		flex-direction: column;
+	}
+
 	.job-company {
 		color: rgb(130, 130, 130);
 		font-size: 0.95rem;
@@ -80,5 +84,26 @@ jobSiteID
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+	}
+
+	.job-tags {
+		width: 50%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.125rem;
+	}
+
+	@media (max-width: 768px) {
+		.job-card {
+			flex-direction: column;
+		}
+		.job-info {
+			width: 100%;
+		}
+		.job-tags {
+			width: 100%;
+		}
 	}
 </style>
