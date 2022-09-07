@@ -1,5 +1,5 @@
 {
-	"name": "pcwatcher-frontend",
+	"name": "devjobwatcher-frontend",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -12,6 +12,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"dotenv": "^16.0.2",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
@@ -22,8 +23,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"axios": "^0.27.2",
 		"bulma": "^0.9.4",
 		"rollup-plugin-postcss": "^4.0.2",
+		"simple-svelte-autocomplete": "^2.4.0",
 		"svelma": "^0.4.5"
 	}
 }
