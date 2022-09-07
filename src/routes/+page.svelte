@@ -88,17 +88,13 @@
 	let jobListings = [];
 
 	onMount(async () => {
-		console.log('mounting');
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/jobs?limit=50`)
-			.catch((error) => {
-				console.log(error);
-			})
+			.catch((error) => {})
 			.then((response) => {
 				if (response !== undefined) {
 					mounted = true;
 					jobListings = [...response.data];
-					console.log(response);
 				}
 			});
 	});
@@ -107,7 +103,6 @@
 		if (!mounted) {
 			return;
 		}
-		console.log('Update Tags');
 		axios
 			.get(
 				`${import.meta.env.VITE_API_URL}/jobs?limit=50${
@@ -116,13 +111,10 @@
 					selectedTypes.length > 0 ? `&types=${selectedTypes.join(',')}` : ''
 				}${selectedIndustries.length > 0 ? `&industries=${selectedIndustries.join(',')}` : ''}`
 			)
-			.catch((error) => {
-				console.log(error);
-			})
+			.catch((error) => {})
 			.then((response) => {
 				if (response !== undefined) {
 					jobListings = [...response.data];
-					console.log(response);
 				}
 			});
 	}
