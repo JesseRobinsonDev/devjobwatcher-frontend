@@ -8,7 +8,7 @@
 
 <div class="job-card">
 	<div class="job-info">
-		<span class="job-title">{job.jobTitle}</span>
+		<a href={job.jobLink} class="job-title">{job.jobTitle}</a>
 		<span class="job-company">{job.jobCompany}</span>
 		<div style="display: flex; flex-direction: row; align-items: center; gap: 0.125rem;">
 			<ul style="display: flex; flex-direction: row; gap: 0.125rem; flex-wrap: wrap;">
@@ -16,6 +16,9 @@
 					<li><Tag type="is-primary">{type}</Tag></li>
 				{/each}
 			</ul>
+			{#if job.jobRemote == 1}
+				<Tag type="is-primary">remote</Tag>
+			{/if}
 			{#if job.jobSalaryLow}
 				<Tag type="is-warning">
 					<span>USD {job.jobSalaryLow}</span>
@@ -50,8 +53,7 @@
 <!--
 id
 jobRemote
-jobLink
-jobSiteID    
+jobLink 
 -->
 <style>
 	.job-card {
@@ -84,6 +86,11 @@ jobSiteID
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		transition: all 300ms;
+	}
+
+	.job-title:hover {
+		color: rgb(44, 169, 46);
 	}
 
 	.job-tags {
