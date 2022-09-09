@@ -1,5 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
+
+	import axios from 'axios';
+	import 'bulma/css/bulma.css';
+	import Tag from 'svelma/src/components/Tag/Tag.svelte';
+
+	import TestingAutoComplete from '../components/TestingAutoComplete.svelte';
+	import PaginationBar from '../components/PaginationBar.svelte';
 	import JobCard from '../components/JobCard.svelte';
 
 	let technologies = [
@@ -75,6 +82,9 @@
 		'devops'
 	];
 
+	let currentPage = 1;
+	let totalJobs = 0;
+
 	let selectedTechnologies = [];
 	let selectedLevels = [];
 	let selectedTypes = [];
@@ -82,21 +92,18 @@
 
 	let mounted = false;
 
-	import axios from 'axios';
-	import TestingAutoComplete from '../components/TestingAutoComplete.svelte';
-	import 'bulma/css/bulma.css';
-	import Tag from 'svelma/src/components/Tag/Tag.svelte';
-
 	let jobListings = [];
 
 	onMount(async () => {
 		axios
-			.get(`${import.meta.env.VITE_API_URL}/jobs?limit=50`)
+			.get(`${import.meta.env.VITE_API_URL}/jobs?limit=25&offset=${(currentPage - 1) * 25}`)
 			.catch((error) => {})
 			.then((response) => {
 				if (response !== undefined) {
 					mounted = true;
-					jobListings = [...response.data];
+					console.log(response);
+					totalJobs = response.data.total;
+					jobListings = [...response.data.jobs];
 				}
 			});
 	});
@@ -107,7 +114,7 @@
 		}
 		axios
 			.get(
-				`${import.meta.env.VITE_API_URL}/jobs?limit=50${
+				`${import.meta.env.VITE_API_URL}/jobs?limit=25&offset=${(currentPage - 1) * 25}${
 					selectedTechnologies.length > 0 ? `&technologies=${selectedTechnologies.join(',')}` : ''
 				}${selectedLevels.length > 0 ? `&levels=${selectedLevels.join(',')}` : ''}${
 					selectedTypes.length > 0 ? `&types=${selectedTypes.join(',')}` : ''
@@ -116,7 +123,9 @@
 			.catch((error) => {})
 			.then((response) => {
 				if (response !== undefined) {
-					jobListings = [...response.data];
+					console.log(response);
+					totalJobs = response.data.total;
+					jobListings = [...response.data.jobs];
 				}
 			});
 	}
@@ -222,14 +231,39 @@
 			</div>
 		</div>
 	</div>
+	<div class="pagination-container">
+		<span class="pagination-text"
+			>Showing {(currentPage - 1) * 25 + 1} to {currentPage * 25} of {totalJobs}</span
+		>
+		<PaginationBar bind:currentPage onChange={updateTags} />
+	</div>
 	<ul class="jobs-container">
 		{#each jobListings as job}
 			<JobCard {job} />
 		{/each}
 	</ul>
+	<div class="pagination-container">
+		<span class="pagination-text"
+			>Showing {(currentPage - 1) * 25 + 1} to {currentPage * 25} of {totalJobs}</span
+		>
+		<PaginationBar bind:currentPage onChange={updateTags} />
+	</div>
 </div>
 
 <style>
+	.pagination-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.pagination-text {
+		padding: 0rem 1rem;
+		border-right: 0.125rem solid rgb(50, 50, 50);
+		color: white;
+	}
+
 	.filters-container {
 		display: flex;
 		flex-direction: column;
